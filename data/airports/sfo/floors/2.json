@@ -1,0 +1,359 @@
+{
+    "id": "2",
+    "name": "Level 2 - Departures",
+    "airport": "sfo",
+    "center": [-122.3875, 37.6175],
+    "defaultZoom": 16,
+    "outline": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [-122.3935, 37.6155],
+          [-122.3935, 37.6195],
+          [-122.3815, 37.6195],
+          [-122.3815, 37.6155],
+          [-122.3935, 37.6155]
+        ]
+      ]
+    },
+    "nodes": [
+      {
+        "id": "gate-a1",
+        "name": "Gate A1",
+        "type": "gate",
+        "terminal": "terminal-1",
+        "coordinates": [-122.3920, 37.6180]
+      },
+      {
+        "id": "gate-a3",
+        "name": "Gate A3",
+        "type": "gate",
+        "terminal": "terminal-1",
+        "coordinates": [-122.3915, 37.6185]
+      },
+      {
+        "id": "gate-a5",
+        "name": "Gate A5",
+        "type": "gate",
+        "terminal": "terminal-1",
+        "coordinates": [-122.3910, 37.6190]
+      },
+      {
+        "id": "gate-b2",
+        "name": "Gate B2",
+        "type": "gate",
+        "terminal": "terminal-2",
+        "coordinates": [-122.3880, 37.6185]
+      },
+      {
+        "id": "gate-b4",
+        "name": "Gate B4",
+        "type": "gate",
+        "terminal": "terminal-2",
+        "coordinates": [-122.3875, 37.6190]
+      },
+      {
+        "id": "gate-c1",
+        "name": "Gate C1",
+        "type": "gate",
+        "terminal": "terminal-3",
+        "coordinates": [-122.3850, 37.6180]
+      },
+      {
+        "id": "gate-c3",
+        "name": "Gate C3",
+        "type": "gate",
+        "terminal": "terminal-3",
+        "coordinates": [-122.3845, 37.6185]
+      },
+      {
+        "id": "security-t1",
+        "name": "Terminal 1 Security",
+        "type": "security",
+        "terminal": "terminal-1",
+        "coordinates": [-122.3925, 37.6170]
+      },
+      {
+        "id": "security-t2",
+        "name": "Terminal 2 Security",
+        "type": "security",
+        "terminal": "terminal-2",
+        "coordinates": [-122.3880, 37.6170]
+      },
+      {
+        "id": "security-t3",
+        "name": "Terminal 3 Security",
+        "type": "security",
+        "terminal": "terminal-3",
+        "coordinates": [-122.3840, 37.6170]
+      },
+      {
+        "id": "restaurant-1",
+        "name": "Napa Farms Market",
+        "type": "restaurant",
+        "terminal": "terminal-2",
+        "coordinates": [-122.3885, 37.6175],
+        "details": {
+          "cuisine": "American",
+          "price": "$",
+          "rating": 4.2,
+          "waitTime": 10
+        }
+      },
+      {
+        "id": "restaurant-2",
+        "name": "Burger Joint",
+        "type": "restaurant",
+        "terminal": "terminal-1",
+        "coordinates": [-122.3915, 37.6175],
+        "details": {
+          "cuisine": "Burgers",
+          "price": "$",
+          "rating": 3.8,
+          "waitTime": 15
+        }
+      },
+      {
+        "id": "restaurant-3",
+        "name": "Peet's Coffee",
+        "type": "restaurant",
+        "terminal": "terminal-3",
+        "coordinates": [-122.3845, 37.6175],
+        "details": {
+          "cuisine": "Coffee",
+          "price": "$",
+          "rating": 4.0,
+          "waitTime": 5
+        }
+      },
+      {
+        "id": "shop-1",
+        "name": "InMotion Entertainment",
+        "type": "shop",
+        "terminal": "terminal-2",
+        "coordinates": [-122.3880, 37.6176],
+        "details": {
+          "category": "Electronics",
+          "rating": 3.9
+        }
+      },
+      {
+        "id": "shop-2",
+        "name": "Duty Free",
+        "type": "shop",
+        "terminal": "international",
+        "coordinates": [-122.3900, 37.6160],
+        "details": {
+          "category": "Duty Free",
+          "rating": 4.1
+        }
+      },
+      {
+        "id": "bathroom-t1",
+        "name": "Terminal 1 Restroom",
+        "type": "bathroom",
+        "terminal": "terminal-1",
+        "coordinates": [-122.3918, 37.6172]
+      },
+      {
+        "id": "bathroom-t2",
+        "name": "Terminal 2 Restroom",
+        "type": "bathroom",
+        "terminal": "terminal-2",
+        "coordinates": [-122.3878, 37.6172]
+      },
+      {
+        "id": "bathroom-t3",
+        "name": "Terminal 3 Restroom",
+        "type": "bathroom",
+        "terminal": "terminal-3",
+        "coordinates": [-122.3842, 37.6172]
+      },
+      {
+        "id": "lounge-1",
+        "name": "United Club",
+        "type": "lounge",
+        "terminal": "terminal-3",
+        "coordinates": [-122.3850, 37.6175],
+        "details": {
+          "airline": "United Airlines",
+          "amenities": ["WiFi", "Food", "Beverages", "Showers"]
+        }
+      },
+      {
+        "id": "lounge-2",
+        "name": "Admirals Club",
+        "type": "lounge",
+        "terminal": "terminal-1",
+        "coordinates": [-122.3920, 37.6175],
+        "details": {
+          "airline": "American Airlines",
+          "amenities": ["WiFi", "Food", "Beverages"]
+        }
+      },
+      {
+        "id": "junction-t1-main",
+        "name": "Terminal 1 Junction",
+        "type": "junction",
+        "coordinates": [-122.3922, 37.6175]
+      },
+      {
+        "id": "junction-t2-main",
+        "name": "Terminal 2 Junction",
+        "type": "junction",
+        "coordinates": [-122.3880, 37.6175]
+      },
+      {
+        "id": "junction-t3-main",
+        "name": "Terminal 3 Junction",
+        "type": "junction",
+        "coordinates": [-122.3848, 37.6175]
+      },
+      {
+        "id": "junction-central",
+        "name": "Central Junction",
+        "type": "junction",
+        "coordinates": [-122.3885, 37.6165]
+      }
+    ],
+    "connections": [
+      {
+        "from": "gate-a1",
+        "to": "junction-t1-main",
+        "distance": 50,
+        "oneWay": false
+      },
+      {
+        "from": "gate-a3",
+        "to": "junction-t1-main",
+        "distance": 60,
+        "oneWay": false
+      },
+      {
+        "from": "gate-a5",
+        "to": "junction-t1-main",
+        "distance": 70,
+        "oneWay": false
+      },
+      {
+        "from": "gate-b2",
+        "to": "junction-t2-main",
+        "distance": 50,
+        "oneWay": false
+      },
+      {
+        "from": "gate-b4",
+        "to": "junction-t2-main",
+        "distance": 60,
+        "oneWay": false
+      },
+      {
+        "from": "gate-c1",
+        "to": "junction-t3-main",
+        "distance": 50,
+        "oneWay": false
+      },
+      {
+        "from": "gate-c3",
+        "to": "junction-t3-main",
+        "distance": 60,
+        "oneWay": false
+      },
+      {
+        "from": "junction-t1-main",
+        "to": "restaurant-2",
+        "distance": 20,
+        "oneWay": false
+      },
+      {
+        "from": "junction-t1-main",
+        "to": "lounge-2",
+        "distance": 15,
+        "oneWay": false
+      },
+      {
+        "from": "junction-t1-main",
+        "to": "bathroom-t1",
+        "distance": 15,
+        "oneWay": false
+      },
+      {
+        "from": "junction-t2-main",
+        "to": "restaurant-1",
+        "distance": 20,
+        "oneWay": false
+      },
+      {
+        "from": "junction-t2-main",
+        "to": "shop-1",
+        "distance": 25,
+        "oneWay": false
+      },
+      {
+        "from": "junction-t2-main",
+        "to": "bathroom-t2",
+        "distance": 15,
+        "oneWay": false
+      },
+      {
+        "from": "junction-t3-main",
+        "to": "restaurant-3",
+        "distance": 20,
+        "oneWay": false
+      },
+      {
+        "from": "junction-t3-main",
+        "to": "lounge-1",
+        "distance": 15,
+        "oneWay": false
+      },
+      {
+        "from": "junction-t3-main",
+        "to": "bathroom-t3",
+        "distance": 15,
+        "oneWay": false
+      },
+      {
+        "from": "junction-t1-main",
+        "to": "security-t1",
+        "distance": 40,
+        "oneWay": false
+      },
+      {
+        "from": "junction-t2-main",
+        "to": "security-t2",
+        "distance": 40,
+        "oneWay": false
+      },
+      {
+        "from": "junction-t3-main",
+        "to": "security-t3",
+        "distance": 40,
+        "oneWay": false
+      },
+      {
+        "from": "security-t1",
+        "to": "junction-central",
+        "distance": 80,
+        "oneWay": false
+      },
+      {
+        "from": "security-t2",
+        "to": "junction-central",
+        "distance": 60,
+        "oneWay": false
+      },
+      {
+        "from": "security-t3",
+        "to": "junction-central",
+        "distance": 80,
+        "oneWay": false
+      },
+      {
+        "from": "junction-central",
+        "to": "shop-2",
+        "distance": 35,
+        "oneWay": false
+      }
+    ]
+}

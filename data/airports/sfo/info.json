@@ -1,0 +1,43 @@
+{
+    "code": "sfo",
+    "name": "San Francisco International Airport",
+    "city": "San Francisco",
+    "state": "CA",
+    "country": "USA",
+    "latitude": 37.6188,
+    "longitude": -122.3758,
+    "timezone": "America/Los_Angeles",
+    "floors": [
+      {
+        "id": "1",
+        "name": "Level 1 - Arrivals"
+      },
+      {
+        "id": "2",
+        "name": "Level 2 - Departures"
+      },
+      {
+        "id": "3",
+        "name": "Level 3 - Food Court"
+      }
+    ],
+    "terminals": [
+      {
+        "id": "terminal-1",
+        "name": "Terminal 1",
+        "alias": "Harvey Milk Terminal"
+      },
+      {
+        "id": "terminal-2",
+        "name": "Terminal 2"
+      },
+      {
+        "id": "terminal-3",
+        "name": "Terminal 3"
+      },
+      {
+        "id": "international",
+        "name": "International Terminal"
+      }
+    ]
+  }

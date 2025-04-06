@@ -1,0 +1,596 @@
+/* Main styles for Glide Airport Navigation App */
+
+/* Base styles and CSS reset */
+*, *::before, *::after {
+    box-sizing: border-box;
+  }
+  
+  body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    background-color: #f5f7fa;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  #root {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* App container */
+  .app {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  /* Header styles */
+  .app-header {
+    background-color: #2563eb;
+    color: white;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
+  
+  .app-header h1 {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 600;
+  }
+  
+  .app-header p {
+    margin: 0.25rem 0 1rem;
+    font-size: 1rem;
+    opacity: 0.9;
+  }
+  
+  .location-selector {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  .selector-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .selector-group label {
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  
+  .selector-group select {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    background-color: white;
+    font-size: 0.9rem;
+    min-width: 150px;
+  }
+  
+  /* Main content area */
+  .app-content {
+    display: flex;
+    height: calc(100% - 140px);
+    overflow: hidden;
+  }
+  
+  /* Sidebar */
+  .sidebar {
+    width: 350px;
+    background-color: white;
+    border-right: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  .sidebar-tabs {
+    display: flex;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .tab-button {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .tab-button.active {
+    color: #2563eb;
+    border-bottom: 2px solid #2563eb;
+  }
+  
+  .tab-button:hover:not(.active) {
+    background-color: #f9fafb;
+  }
+  
+  .sidebar-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+  }
+  
+  /* Navigation panel styles */
+  .navigation-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  
+  .panel-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .form-group label {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: #4b5563;
+  }
+  
+  .select-input {
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    background-color: white;
+  }
+  
+  .stops-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .stop-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    background-color: #f3f4f6;
+    border-radius: 4px;
+  }
+  
+  .remove-stop-btn {
+    background: none;
+    border: none;
+    color: #ef4444;
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+  }
+  
+  .route-details {
+    background-color: #f9fafb;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .route-details h3 {
+    margin: 0 0 0.75rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  
+  .route-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  
+  .stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .stat-icon {
+    color: #2563eb;
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  
+  .stat-label {
+    display: block;
+    font-size: 0.75rem;
+    color: #6b7280;
+  }
+  
+  .stat-value {
+    display: block;
+    font-weight: 600;
+  }
+  
+  .route-path {
+    margin-top: 1rem;
+  }
+  
+  .route-path h4 {
+    margin: 0 0 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+  
+  .path-list {
+    margin: 0;
+    padding-left: 1.5rem;
+  }
+  
+  .path-item {
+    margin-bottom: 0.5rem;
+  }
+  
+  .point-type {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-left: 0.25rem;
+  }
+  
+  /* Filter menu styles */
+  .filter-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .filter-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+  }
+  
+  .filter-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .filter-section h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+    color: #374151;
+  }
+  
+  .type-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+  }
+  
+  .checkbox-label, .radio-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+  }
+  
+  .type-name {
+    font-size: 0.95rem;
+  }
+  
+  .radio-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .rating-slider {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .rating-slider input {
+    width: 100%;
+  }
+  
+  .rating-value {
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+  }
+  
+  .clear-filter-btn {
+    background: none;
+    border: none;
+    color: #6b7280;
+    font-size: 0.85rem;
+    cursor: pointer;
+    align-self: flex-start;
+    padding: 0;
+    margin-top: 0.25rem;
+    text-decoration: underline;
+  }
+  
+  .clear-all-btn {
+    background-color: #f3f4f6;
+    border: 1px solid #d1d5db;
+    color: #4b5563;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 0.75rem;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background-color 0.2s;
+  }
+  
+  .clear-all-btn:hover {
+    background-color: #e5e7eb;
+  }
+  
+  /* Wait times panel */
+  .wait-times-panel {
+    padding: 1rem;
+    border-top: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+  }
+  
+  .wait-times-widget {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .widget-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .wait-times-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .wait-time-item {
+    background-color: white;
+    border-radius: 6px;
+    padding: 0.75rem;
+    border-left: 4px solid transparent;
+  }
+  
+  .wait-time-item.status-low {
+    border-left-color: #22c55e;
+  }
+  
+  .wait-time-item.status-medium {
+    border-left-color: #eab308;
+  }
+  
+  .wait-time-item.status-high {
+    border-left-color: #ef4444;
+  }
+  
+  .checkpoint-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .checkpoint-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .wait-time {
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+  }
+  
+  .wait-minutes {
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+  
+  .minutes-label {
+    font-size: 0.8rem;
+    color: #6b7280;
+  }
+  
+  .status-indicator {
+    margin-bottom: 0.5rem;
+  }
+  
+  .status-bar {
+    height: 6px;
+    background-color: #e5e7eb;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 0.25rem;
+  }
+  
+  .status-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+  }
+  
+  .status-low .status-fill {
+    background-color: #22c55e;
+  }
+  
+  .status-medium .status-fill {
+    background-color: #eab308;
+  }
+  
+  .status-high .status-fill {
+    background-color: #ef4444;
+  }
+  
+  .status-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+  
+  .status-low .status-label {
+    color: #22c55e;
+  }
+  
+  .status-medium .status-label {
+    color: #eab308;
+  }
+  
+  .status-high .status-label {
+    color: #ef4444;
+  }
+  
+  .update-time {
+    font-size: 0.75rem;
+    color: #6b7280;
+    text-align: right;
+  }
+  
+  .refresh-button {
+    background-color: transparent;
+    border: 1px solid #2563eb;
+    color: #2563eb;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    width: 100%;
+  }
+  
+  .refresh-button:hover:not(:disabled) {
+    background-color: #eff6ff;
+  }
+  
+  .refresh-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  /* Map section */
+  .map-section {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .map-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  
+  /* Loading and error states */
+  .loading-overlay, .loading-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+  }
+  
+  .loading-spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid #e5e7eb;
+    border-top: 4px solid #2563eb;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .error-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 80%;
+  }
+  
+  .error-message {
+    color: #b91c1c;
+    font-weight: 500;
+    margin: 0;
+  }
+  
+  .loading-message, .no-data-message {
+    text-align: center;
+    padding: 1rem;
+    color: #6b7280;
+  }
+  
+  /* Footer */
+  .app-footer {
+    padding: 1rem;
+    background-color: #f3f4f6;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #6b7280;
+    border-top: 1px solid #e5e7eb;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .app-content {
+      flex-direction: column;
+    }
+    
+    .sidebar {
+      width: 100%;
+      height: 50%;
+      border-right: none;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    
+    .map-section {
+      height: 50%;
+    }
+    
+    .location-selector {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+  }

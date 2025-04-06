@@ -1,0 +1,192 @@
+[
+    {
+      "id": "restaurant-1",
+      "name": "Napa Farms Market",
+      "type": "restaurant",
+      "terminal": "terminal-2",
+      "floor": "2",
+      "coordinates": [-122.3885, 37.6175],
+      "details": {
+        "cuisine": "American",
+        "description": "Farm-to-table marketplace offering fresh, local ingredients and prepared foods.",
+        "hours": "5:00 AM - 11:00 PM",
+        "price": "$$",
+        "rating": 4.2,
+        "waitTime": 10,
+        "tags": ["breakfast", "lunch", "dinner", "healthy", "organic"],
+        "imageUrl": "/assets/images/restaurants/napa-farms.jpg"
+      }
+    },
+    {
+      "id": "restaurant-2",
+      "name": "Burger Joint",
+      "type": "restaurant",
+      "terminal": "terminal-1",
+      "floor": "2",
+      "coordinates": [-122.3915, 37.6175],
+      "details": {
+        "cuisine": "Burgers",
+        "description": "Classic burgers, fries, and shakes in a casual setting.",
+        "hours": "6:00 AM - 10:00 PM",
+        "price": "$",
+        "rating": 3.8,
+        "waitTime": 15,
+        "tags": ["burgers", "fast food", "kid-friendly"],
+        "imageUrl": "/assets/images/restaurants/burger-joint.jpg"
+      }
+    },
+    {
+      "id": "restaurant-3",
+      "name": "Peet's Coffee",
+      "type": "restaurant",
+      "terminal": "terminal-3",
+      "floor": "2",
+      "coordinates": [-122.3845, 37.6175],
+      "details": {
+        "cuisine": "Coffee",
+        "description": "Premium coffees, teas, and light snacks.",
+        "hours": "4:30 AM - 11:30 PM",
+        "price": "$",
+        "rating": 4.0,
+        "waitTime": 5,
+        "tags": ["coffee", "breakfast", "snacks"],
+        "imageUrl": "/assets/images/restaurants/peets-coffee.jpg"
+      }
+    },
+    {
+      "id": "restaurant-4",
+      "name": "Boudin Bakery",
+      "type": "restaurant",
+      "terminal": "terminal-3",
+      "floor": "3",
+      "coordinates": [-122.3842, 37.6178],
+      "details": {
+        "cuisine": "Bakery",
+        "description": "Famous San Francisco sourdough bread bowls and sandwiches.",
+        "hours": "6:00 AM - 10:00 PM",
+        "price": "$$",
+        "rating": 4.3,
+        "waitTime": 8,
+        "tags": ["bakery", "sandwiches", "soup", "local favorite"],
+        "imageUrl": "/assets/images/restaurants/boudin-bakery.jpg"
+      }
+    },
+    {
+      "id": "shop-1",
+      "name": "InMotion Entertainment",
+      "type": "shop",
+      "terminal": "terminal-2",
+      "floor": "2",
+      "coordinates": [-122.3880, 37.6176],
+      "details": {
+        "category": "Electronics",
+        "description": "Electronics store offering headphones, travel accessories, and gadgets.",
+        "hours": "6:00 AM - 10:00 PM",
+        "rating": 3.9,
+        "tags": ["electronics", "headphones", "accessories"],
+        "imageUrl": "/assets/images/shops/inmotion.jpg"
+      }
+    },
+    {
+      "id": "shop-2",
+      "name": "Duty Free",
+      "type": "shop",
+      "terminal": "international",
+      "floor": "2",
+      "coordinates": [-122.3900, 37.6160],
+      "details": {
+        "category": "Duty Free",
+        "description": "Tax-free shopping for international travelers featuring liquor, cosmetics, and luxury goods.",
+        "hours": "6:00 AM - 11:00 PM",
+        "rating": 4.1,
+        "tags": ["duty free", "luxury", "cosmetics", "liquor"],
+        "imageUrl": "/assets/images/shops/duty-free.jpg"
+      }
+    },
+    {
+      "id": "shop-3",
+      "name": "SF Giants Dugout",
+      "type": "shop",
+      "terminal": "terminal-3",
+      "floor": "2",
+      "coordinates": [-122.3847, 37.6173],
+      "details": {
+        "category": "Sports Apparel",
+        "description": "Official San Francisco Giants merchandise and souvenirs.",
+        "hours": "6:30 AM - 9:30 PM",
+        "rating": 4.2,
+        "tags": ["sports", "apparel", "souvenirs", "local"],
+        "imageUrl": "/assets/images/shops/sf-giants.jpg"
+      }
+    },
+    {
+      "id": "bathroom-t1",
+      "name": "Terminal 1 Restroom",
+      "type": "bathroom",
+      "terminal": "terminal-1",
+      "floor": "2",
+      "coordinates": [-122.3918, 37.6172],
+      "details": {
+        "amenities": ["changing tables", "accessible stalls"],
+        "family_friendly": true
+      }
+    },
+    {
+      "id": "bathroom-t2",
+      "name": "Terminal 2 Restroom",
+      "type": "bathroom",
+      "terminal": "terminal-2",
+      "floor": "2",
+      "coordinates": [-122.3878, 37.6172],
+      "details": {
+        "amenities": ["changing tables", "accessible stalls", "nursing room"],
+        "family_friendly": true
+      }
+    },
+    {
+      "id": "bathroom-t3",
+      "name": "Terminal 3 Restroom",
+      "type": "bathroom",
+      "terminal": "terminal-3",
+      "floor": "2",
+      "coordinates": [-122.3842, 37.6172],
+      "details": {
+        "amenities": ["changing tables", "accessible stalls"],
+        "family_friendly": true
+      }
+    },
+    {
+      "id": "lounge-1",
+      "name": "United Club",
+      "type": "lounge",
+      "terminal": "terminal-3",
+      "floor": "2",
+      "coordinates": [-122.3850, 37.6175],
+      "details": {
+        "airline": "United Airlines",
+        "description": "Exclusive lounge for United Airlines premium passengers and club members.",
+        "hours": "5:00 AM - 10:30 PM",
+        "rating": 4.1,
+        "amenities": ["WiFi", "Food", "Beverages", "Showers", "Business Center"],
+        "access": ["United Airlines premium tickets", "Star Alliance Gold", "United Club membership"],
+        "imageUrl": "/assets/images/lounges/united-club.jpg"
+      }
+    },
+    {
+      "id": "lounge-2",
+      "name": "Admirals Club",
+      "type": "lounge",
+      "terminal": "terminal-1",
+      "floor": "2",
+      "coordinates": [-122.3920, 37.6175],
+      "details": {
+        "airline": "American Airlines",
+        "description": "Premium lounge for American Airlines passengers and Admirals Club members.",
+        "hours": "5:30 AM - 10:00 PM",
+        "rating": 4.0,
+        "amenities": ["WiFi", "Food", "Beverages", "Business Center"],
+        "access": ["American Airlines premium tickets", "Oneworld elite status", "Admirals Club membership"],
+        "imageUrl": "/assets/images/lounges/admirals-club.jpg"
+      }
+    }
+  ]
