@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "axios": "^1.8.4",
+    "lodash": "^4.17.21",
+    "mapbox-gl": "^3.11.0",
+    "react-router-dom": "^7.5.0"
+  }
+}
