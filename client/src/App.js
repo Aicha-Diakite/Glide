@@ -16,84 +16,43 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch available airports on component mount
+  // Load hardcoded airports data
   useEffect(() => {
-//     const fetchAirports = async () => {
-//       try {
-//         setLoading(true);
-//         const response = await axios.get('http://localhost:5000/api/airports');
-//         setAirports(response.data);
-        
-//         // Set default airport if available
-//         if (response.data.length > 0) {
-//           setSelectedAirport(response.data[0].code);
-//         }
-        
-//         setError(null);
-//       } catch (err) {
-//         console.error('Error fetching airports:', err);
-//         setError('Failed to load airports data');
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-    
-//     fetchAirports();
-//   }, []);
+    console.log("Using hardcoded data instead of API call");
+    setAirports([
+      { code: "sfo", name: "San Francisco International Airport" },
+      { code: "jfk", name: "JFK International Airport" },
+      { code: "ord", name: "O'Hare International Airport" }
+    ]);
+    setSelectedAirport("sfo");
+    setLoading(false);
+  }, []);
 
-
-// Use hardcoded data instead
-console.log("Using hardcoded data instead of API call");
-setAirports([
-  { code: "sfo", name: "San Francisco International Airport" },
-  { code: "jfk", name: "JFK International Airport" },
-  { code: "ord", name: "O'Hare International Airport" }
-]);
-setSelectedAirport("sfo");
-setFloors([
-  { id: "1", name: "Level 1 - Arrivals" },
-  { id: "2", name: "Level 2 - Departures" },
-  { id: "3", name: "Level 3 - Food Court" }
-]);
-setSelectedFloor("2");
-setLoading(false);
-}, []);
-
-  // Fetch floors for selected airport
+  // Load hardcoded floors data when
+  // Load hardcoded floors data when airport changes
   useEffect(() => {
     if (!selectedAirport) return;
     
-    const fetchFloors = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(`/api/airports/${selectedAirport}`);
-        
-        // Extract available floors
-        if (response.data.floors && response.data.floors.length > 0) {
-          setFloors(response.data.floors);
-          setSelectedFloor(response.data.floors[0].id);
-        } else {
-          // Fallback to default floor
-          setFloors([{ id: '1', name: 'Floor 1' }]);
-          setSelectedFloor('1');
-        }
-        
-        setError(null);
-      } catch (err) {
-        console.error('Error fetching floors:', err);
-        setError('Failed to load airport data');
-      } finally {
-        setLoading(false);
-      }
-    };
+    // Don't make the API call at all
+    // Instead, directly use mock data
+    console.log("Using hardcoded floor data");
     
-    fetchFloors();
+    const mockFloors = [
+      { id: '1', name: 'Level 1 - Arrivals' },
+      { id: '2', name: 'Level 2 - Departures' },
+      { id: '3', name: 'Level 3 - Food Court' }
+    ];
+    
+    setFloors(mockFloors);
+    setSelectedFloor('2');
+    setLoading(false);
+    setError(null);
+    
   }, [selectedAirport]);
 
   // Handle airport selection change
   const handleAirportChange = (e) => {
     setSelectedAirport(e.target.value);
-    setSelectedFloor('');
     setSelectedRoute(null);
   };
 
@@ -174,11 +133,14 @@ setLoading(false);
           
           <div className="sidebar-content">
             {sidebarView === 'navigation' ? (
-              <Navigation
-                airport={selectedAirport}
-                floor={selectedFloor}
-                onRouteSelected={handleRouteSelected}
-              />
+              <>
+                <Navigation
+                  airport={selectedAirport}
+                  floor={selectedFloor}
+                  onRouteSelected={handleRouteSelected}
+                />
+                <WaitTimes airport={selectedAirport} />
+              </>
             ) : (
               <FilterMenu
                 airport={selectedAirport}
@@ -186,10 +148,6 @@ setLoading(false);
                 onFilterChange={handleFilterChange}
               />
             )}
-          </div>
-          
-          <div className="wait-times-panel">
-            <WaitTimes airport={selectedAirport} />
           </div>
         </div>
         

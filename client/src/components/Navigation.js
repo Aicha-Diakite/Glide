@@ -1,92 +1,63 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { ReactComponent as LocationIcon } from '../assets/icons/location.svg';
-import { ReactComponent as ClockIcon } from '../assets/icons/clock.svg';
-import { ReactComponent as RouteIcon } from '../assets/icons/route.svg';
 
 const Navigation = ({ airport, floor, onRouteSelected }) => {
-  const [startPoint, setStartPoint] = useState(null);
-  const [endPoint, setEndPoint] = useState(null);
+  const [startPoint, setStartPoint] = useState('');
+  const [endPoint, setEndPoint] = useState('');
   const [stops, setStops] = useState([]);
   const [availablePoints, setAvailablePoints] = useState([]);
   const [calculatedRoute, setCalculatedRoute] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   
-  // Fetch available points (gates, amenities) for the current airport and floor
+  // Use mock data instead of API call
   useEffect(() => {
     if (!airport || !floor) return;
     
-    const fetchPoints = async () => {
-      try {
-        // Fetch gates
-        const gatesResponse = await axios.get(`/api/airports/${airport}`);
-        const gates = gatesResponse.data.gates.filter(gate => gate.floor.toString() === floor.toString());
-        
-        // Fetch amenities
-        const amenitiesResponse = await axios.get(`/api/amenities/${airport}/filter`, {
-          params: { floor }
-        });
-        
-        // Combine points
-        const points = [
-          ...gates.map(gate => ({
-            id: gate.id,
-            name: gate.name,
-            type: 'gate',
-            floor: gate.floor
-          })),
-          ...amenitiesResponse.data.map(amenity => ({
-            id: amenity.id,
-            name: amenity.name,
-            type: amenity.type,
-            floor: amenity.floor
-          }))
-        ];
-        
-        setAvailablePoints(points);
-      } catch (err) {
-        console.error('Error fetching points:', err);
-        setError('Failed to load available destinations');
-      }
-    };
+    console.log("Using mock points data");
     
-    fetchPoints();
+    // Mock data for available points
+    const mockPoints = [
+      {
+        id: "gate-a1",
+        name: "Gate A1",
+        type: "gate",
+        floor: floor
+      },
+      {
+        id: "gate-b2",
+        name: "Gate B2",
+        type: "gate",
+        floor: floor
+      },
+      {
+        id: "restaurant-1",
+        name: "Napa Farms Market",
+        type: "restaurant",
+        floor: floor
+      },
+      {
+        id: "bathroom-t1",
+        name: "Terminal 1 Restroom",
+        type: "bathroom",
+        floor: floor
+      },
+      {
+        id: "security-t1",
+        name: "Terminal 1 Security",
+        type: "security",
+        floor: floor
+      },
+      {
+        id: "current_location",
+        name: "Current Location",
+        type: "location",
+        floor: floor
+      }
+    ];
+    
+    setAvailablePoints(mockPoints);
   }, [airport, floor]);
-  
-  // Calculate the route when start and end points are selected
-  useEffect(() => {
-    if (!startPoint || !endPoint) return;
-    
-    const calculateRoute = async () => {
-      setLoading(true);
-      setError(null);
-      
-      try {
-        const response = await axios.post(`/api/airports/${airport}/route`, {
-          floor,
-          start: startPoint,
-          end: endPoint,
-          stops: stops
-        });
-        
-        setCalculatedRoute(response.data);
-        
-        // Pass the route up to parent component (Map)
-        if (onRouteSelected) {
-          onRouteSelected(response.data);
-        }
-      } catch (err) {
-        console.error('Error calculating route:', err);
-        setError('Failed to calculate route');
-        setCalculatedRoute(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-    
-    calculateRoute();
-  }, [airport, floor, startPoint, endPoint, stops, onRouteSelected]);
   
   // Handle adding a stop to the route
   const handleAddStop = (stopId) => {
@@ -103,6 +74,24 @@ const Navigation = ({ airport, floor, onRouteSelected }) => {
   const findPointById = (id) => {
     return availablePoints.find(point => point.id === id);
   };
+  
+  // Calculate route when start and end points are selected
+  useEffect(() => {
+    if (!startPoint || !endPoint) return;
+    
+    // Create mock calculated route
+    const mockRoute = {
+      path: [startPoint, ...stops, endPoint],
+      distance: 250 + (stops.length * 50)
+    };
+    
+    setCalculatedRoute(mockRoute);
+    
+    // Pass the route up to parent component
+    if (onRouteSelected) {
+      onRouteSelected(mockRoute);
+    }
+  }, [startPoint, endPoint, stops, onRouteSelected]);
   
   // Format estimated time based on distance
   const formatEstimatedTime = (distance) => {
@@ -129,17 +118,19 @@ const Navigation = ({ airport, floor, onRouteSelected }) => {
         <label htmlFor="start-point">Starting Point:</label>
         <select 
           id="start-point"
-          value={startPoint || ''}
+          value={startPoint}
           onChange={(e) => setStartPoint(e.target.value)}
           className="select-input"
         >
           <option value="">Select starting point</option>
           <option value="current_location">Current Location</option>
-          {availablePoints.map(point => (
-            <option key={`start-${point.id}`} value={point.id}>
-              {point.name} ({point.type})
-            </option>
-          ))}
+          {availablePoints
+            .filter(point => point.id !== 'current_location')
+            .map(point => (
+              <option key={`start-${point.id}`} value={point.id}>
+                {point.name} ({point.type})
+              </option>
+            ))}
         </select>
       </div>
       
@@ -148,7 +139,7 @@ const Navigation = ({ airport, floor, onRouteSelected }) => {
         <label htmlFor="end-point">Destination:</label>
         <select 
           id="end-point"
-          value={endPoint || ''}
+          value={endPoint}
           onChange={(e) => setEndPoint(e.target.value)}
           className="select-input"
         >
@@ -161,7 +152,7 @@ const Navigation = ({ airport, floor, onRouteSelected }) => {
         </select>
       </div>
       
-      {/* Stops Selection */}
+      {/* Stops Along the Way */}
       <div className="form-group">
         <label>Stops Along the Way:</label>
         <div className="stops-container">
@@ -209,7 +200,6 @@ const Navigation = ({ airport, floor, onRouteSelected }) => {
           
           <div className="route-stats">
             <div className="stat-item">
-              <LocationIcon className="stat-icon" />
               <div>
                 <span className="stat-label">Distance</span>
                 <span className="stat-value">{Math.round(calculatedRoute.distance)} meters</span>
@@ -217,7 +207,6 @@ const Navigation = ({ airport, floor, onRouteSelected }) => {
             </div>
             
             <div className="stat-item">
-              <ClockIcon className="stat-icon" />
               <div>
                 <span className="stat-label">Est. Time</span>
                 <span className="stat-value">{formatEstimatedTime(calculatedRoute.distance)}</span>
@@ -225,10 +214,9 @@ const Navigation = ({ airport, floor, onRouteSelected }) => {
             </div>
             
             <div className="stat-item">
-              <RouteIcon className="stat-icon" />
               <div>
                 <span className="stat-label">Stops</span>
-                <span className="stat-value">{calculatedRoute.path.length - 2} stops</span>
+                <span className="stat-value">{stops.length} stops</span>
               </div>
             </div>
           </div>

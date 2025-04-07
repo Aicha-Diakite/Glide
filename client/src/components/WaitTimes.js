@@ -6,62 +6,52 @@ const WaitTimes = ({ airport }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   
+  
   // Fetch wait times for the selected airport
-  useEffect(() => {
+ // In WaitTimes.js
+useEffect(() => {
     if (!airport) return;
     
-    const fetchWaitTimes = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(`/api/security/${airport}/wait-times`);
-        setWaitTimes(response.data);
-        setError(null);
-      } catch (err) {
-        console.error('Error fetching wait times:', err);
-        setError('Unable to load security wait times');
-        
-        // For demo/development purposes, generate mock data if API fails
-        generateMockWaitTimes();
-      } finally {
-        setLoading(false);
+    // Skip API call and use mockData
+    console.log("Using mock wait times data");
+    const mockTimes = [
+      {
+        id: "security-t1",
+        checkpoint: "Terminal 1 Security",
+        waitMinutes: Math.floor(Math.random() * 40) + 5,
+        status: "low",
+        lastUpdated: new Date().toISOString()
+      },
+      {
+        id: "security-t2",
+        checkpoint: "Terminal 2 Security",
+        waitMinutes: Math.floor(Math.random() * 40) + 5,
+        status: "medium",
+        lastUpdated: new Date().toISOString()
+      },
+      {
+        id: "security-t3",
+        checkpoint: "Terminal 3 Security",
+        waitMinutes: Math.floor(Math.random() * 40) + 5,
+        status: "high",
+        lastUpdated: new Date().toISOString()
       }
-    };
+    ];
     
-    // Generate mock wait times (for demo/development)
-    const generateMockWaitTimes = () => {
-      const checkpoints = ['Terminal 1', 'Terminal 2', 'Terminal 3', 'International'];
-      const mockTimes = checkpoints.map(checkpoint => {
-        // Random wait time between 5 and 45 minutes
-        const waitMinutes = Math.floor(Math.random() * 40) + 5;
-        
-        // Determine status based on wait time
-        let status;
-        if (waitMinutes < 15) {
-          status = 'low';
-        } else if (waitMinutes < 30) {
-          status = 'medium';
-        } else {
-          status = 'high';
-        }
-        
-        return {
-          id: checkpoint.toLowerCase().replace(/\s+/g, '-'),
-          checkpoint,
-          waitMinutes,
-          status,
-          lastUpdated: new Date().toISOString()
-        };
-      });
-      
-      setWaitTimes(mockTimes);
-    };
+    // Update status based on wait time
+    mockTimes.forEach(checkpoint => {
+      if (checkpoint.waitMinutes < 15) {
+        checkpoint.status = 'low';
+      } else if (checkpoint.waitMinutes < 30) {
+        checkpoint.status = 'medium';
+      } else {
+        checkpoint.status = 'high';
+      }
+    });
     
-    fetchWaitTimes();
-    
-    // Set up refresh interval (every 5 minutes)
-    const refreshInterval = setInterval(fetchWaitTimes, 5 * 60 * 1000);
-    
-    return () => clearInterval(refreshInterval);
+    setWaitTimes(mockTimes);
+    setError(null);
+    setLoading(false);
   }, [airport]);
   
   // Format the time since last update
