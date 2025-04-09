@@ -1,11 +1,26 @@
+// server/routes.js
 const express = require('express');
 const router = express.Router();
+
+// Import route modules
+const airportsRouter = require('./api/routes/airports');
+const securityRouter = require('./api/routes/security');
+const amenitiesRouter = require('./api/routes/amenities');
+const flightsRouter = require('./api/routes/flights');
+
+// Set up API routes
+router.use('/airports', airportsRouter);
+router.use('/security', securityRouter);
+router.use('/amenities', amenitiesRouter);
+router.use('/flights', flightsRouter);
+
+// Custom route for pathfinding/routes
 const path = require('path');
 const fs = require('fs').promises;
-const pathfindingService = require('../../services/pathfindingService');
+const pathfindingService = require('./services/pathfindingService');
 
 // Calculate route between two points in an airport
-router.post('/:code/route', async (req, res) => {
+router.post('/airports/:code/route', async (req, res) => {
   try {
     const { code } = req.params;
     const { floor, start, end, stops = [] } = req.body;
@@ -21,10 +36,13 @@ router.post('/:code/route', async (req, res) => {
     if (start === 'current_location') {
       // In a real app, we would use geolocation data
       // For MVP, we'll use a default entry point for the terminal
-      const terminals = await getAirportTerminals(code);
-      if (terminals && terminals.length > 0) {
+      const infoPath = path.join(__dirname, `../data/airports/${code.toLowerCase()}/info.json`);
+      const infoData = await fs.readFile(infoPath, 'utf8');
+      const airportInfo = JSON.parse(infoData);
+      
+      if (airportInfo.terminals && airportInfo.terminals.length > 0) {
         // Use the main entrance of the first terminal as default starting point
-        startPoint = `entrance-${terminals[0].id}`;
+        startPoint = `entrance-${airportInfo.terminals[0].id}`;
       } else {
         return res.status(400).json({ 
           message: 'Could not determine current location' 
@@ -35,7 +53,7 @@ router.post('/:code/route', async (req, res) => {
     // Read floor data to get the nodes and connections
     const floorPath = path.join(
       __dirname, 
-      `../../../data/airports/${code.toLowerCase()}/floors/${floor}.json`
+      `../data/airports/${code.toLowerCase()}/floors/${floor}.json`
     );
     
     // Check if floor data exists
@@ -94,59 +112,5 @@ router.post('/:code/route', async (req, res) => {
     res.status(500).json({ message: 'Error calculating route' });
   }
 });
-
-// Get available destination types for an airport
-router.get('/:code/destination-types', async (req, res) => {
-  try {
-    const { code } = req.params;
-    const { floor } = req.query;
-    
-    if (!floor) {
-      return res.status(400).json({ message: 'Floor parameter is required' });
-    }
-    
-    // Read floor data to get the nodes
-    const floorPath = path.join(
-      __dirname, 
-      `../../../data/airports/${code.toLowerCase()}/floors/${floor}.json`
-    );
-    
-    try {
-      await fs.access(floorPath);
-    } catch (err) {
-      return res.status(404).json({ message: 'Floor data not found' });
-    }
-    
-    // Read and parse floor data
-    const floorDataRaw = await fs.readFile(floorPath, 'utf8');
-    const floorData = JSON.parse(floorDataRaw);
-    
-    // Extract unique destination types
-    const types = [...new Set(floorData.nodes.map(node => node.type))];
-    
-    res.json({ types });
-  } catch (err) {
-    console.error(`Error fetching destination types for ${req.params.code}:`, err);
-    res.status(500).json({ message: 'Error fetching destination types' });
-  }
-});
-
-// Helper function to get terminals for an airport
-async function getAirportTerminals(code) {
-  try {
-    const infoPath = path.join(
-      __dirname,
-      `../../../data/airports/${code.toLowerCase()}/info.json`
-    );
-    
-    const infoData = await fs.readFile(infoPath, 'utf8');
-    const airportInfo = JSON.parse(infoData);
-    
-    return airportInfo.terminals || [];
-  } catch (err) {
-    console.error(`Error fetching terminals for ${code}:`, err);
-    return [];
-  }
-}
 
 module.exports = router;
