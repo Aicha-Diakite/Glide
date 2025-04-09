@@ -11,39 +11,49 @@ dotenv.config();
 // Initialize express app
 const app = express();
 
-// CORS middleware - simplest possible configuration 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-  
-  next();
-});
+// CORS middleware
+app.use(cors());
+
+// Security middleware
+app.use(helmet({
+  contentSecurityPolicy: false // Disabled for development - enable in production
+}));
 
 // Other middleware
 app.use(compression()); // Compress responses
 app.use(express.json()); // Parse JSON bodies
 
 // Import routes
-const airportsRouter = require('./api/routes/airports');
-const securityRouter = require('./api/routes/security');
-const amenitiesRouter = require('./api/routes/amenities');
-const flightsRouter = require('./api/routes/flights');
+const apiRoutes = require('./routes');
 
 // API routes
-app.use('/api/airports', airportsRouter);
-app.use('/api/security', securityRouter);
-app.use('/api/amenities', amenitiesRouter);
-app.use('/api/flights', flightsRouter);
+app.use('/api', apiRoutes);
 
-// Debug middleware
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.url}`);
-  next();
+// Debug middleware for logging requests
+if (process.env.NODE_ENV !== 'production') {
+  app.use((req, res, next) => {
+    console.log(`${req.method} ${req.url}`);
+    next();
+  });
+}
+
+// Serve static files from the React app in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/build')));
+  
+  // For any request that doesn't match an API route, serve the React app
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+  });
+}
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({
+    message: 'An unexpected error occurred',
+    error: process.env.NODE_ENV === 'development' ? err.message : undefined
+  });
 });
 
 // Set port and start server

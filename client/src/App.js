@@ -4,6 +4,7 @@ import Map from './components/Map';
 import Navigation from './components/Navigation';
 import FilterMenu from './components/FilterMenu';
 import WaitTimes from './components/WaitTimes';
+import FlightInfo from './components/FlightInfo';
 import './styles.css';
 
 function App() {
@@ -12,47 +13,85 @@ function App() {
   const [floors, setFloors] = useState([]);
   const [selectedFloor, setSelectedFloor] = useState('');
   const [selectedRoute, setSelectedRoute] = useState(null);
-  const [sidebarView, setSidebarView] = useState('navigation'); // 'navigation' or 'filter'
+  const [sidebarView, setSidebarView] = useState('navigation'); // 'navigation', 'filter', or 'flights'
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Load hardcoded airports data
+  // Fetch available airports on component mount
   useEffect(() => {
-    console.log("Using hardcoded data instead of API call");
-    setAirports([
-      { code: "sfo", name: "San Francisco International Airport" },
-      { code: "jfk", name: "JFK International Airport" },
-      { code: "ord", name: "O'Hare International Airport" }
-    ]);
-    setSelectedAirport("sfo");
-    setLoading(false);
+    const fetchAirports = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get('/api/airports');
+        setAirports(response.data);
+        
+        // Set default airport if available
+        if (response.data.length > 0) {
+          setSelectedAirport(response.data[0].code);
+        }
+        
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching airports:', err);
+        setError('Failed to load airports data');
+        
+        // Fallback to hardcoded data for testing
+        console.log("Using hardcoded data instead of API call");
+        setAirports([
+          { code: "sfo", name: "San Francisco International Airport" },
+          { code: "jfk", name: "JFK International Airport" },
+          { code: "ord", name: "O'Hare International Airport" }
+        ]);
+        setSelectedAirport("sfo");
+        setFloors([
+          { id: "1", name: "Level 1 - Arrivals" },
+          { id: "2", name: "Level 2 - Departures" },
+          { id: "3", name: "Level 3 - Food Court" }
+        ]);
+        setSelectedFloor("2");
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchAirports();
   }, []);
 
-  // Load hardcoded floors data when
-  // Load hardcoded floors data when airport changes
+  // Fetch floors for selected airport
   useEffect(() => {
     if (!selectedAirport) return;
     
-    // Don't make the API call at all
-    // Instead, directly use mock data
-    console.log("Using hardcoded floor data");
+    const fetchFloors = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`/api/airports/${selectedAirport}`);
+        
+        // Extract available floors
+        if (response.data.floors && response.data.floors.length > 0) {
+          setFloors(response.data.floors);
+          setSelectedFloor(response.data.floors[0].id);
+        } else {
+          // Fallback to default floor
+          setFloors([{ id: '1', name: 'Floor 1' }]);
+          setSelectedFloor('1');
+        }
+        
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching floors:', err);
+        setError('Failed to load airport data');
+      } finally {
+        setLoading(false);
+      }
+    };
     
-    const mockFloors = [
-      { id: '1', name: 'Level 1 - Arrivals' },
-      { id: '2', name: 'Level 2 - Departures' },
-      { id: '3', name: 'Level 3 - Food Court' }
-    ];
-    
-    setFloors(mockFloors);
-    setSelectedFloor('2');
-    setLoading(false);
-    setError(null);
-    
+    fetchFloors();
   }, [selectedAirport]);
 
   // Handle airport selection change
   const handleAirportChange = (e) => {
     setSelectedAirport(e.target.value);
+    setSelectedFloor('');
     setSelectedRoute(null);
   };
 
@@ -102,7 +141,7 @@ function App() {
               id="floor-select"
               value={selectedFloor}
               onChange={handleFloorChange}
-              disabled={loading || floors.length === 0}
+              disabled={loading || floors.length === 0 || sidebarView === 'flights'}
             >
               {floors.map(floor => (
                 <option key={floor.id} value={floor.id}>
@@ -129,26 +168,39 @@ function App() {
             >
               Filter
             </button>
+            <button
+              className={`tab-button ${sidebarView === 'flights' ? 'active' : ''}`}
+              onClick={() => setSidebarView('flights')}
+            >
+              Flights
+            </button>
           </div>
           
           <div className="sidebar-content">
-            {sidebarView === 'navigation' ? (
-              <>
-                <Navigation
-                  airport={selectedAirport}
-                  floor={selectedFloor}
-                  onRouteSelected={handleRouteSelected}
-                />
-                <WaitTimes airport={selectedAirport} />
-              </>
-            ) : (
+            {sidebarView === 'navigation' && (
+              <Navigation
+                airport={selectedAirport}
+                floor={selectedFloor}
+                onRouteSelected={handleRouteSelected}
+              />
+            )}
+            {sidebarView === 'filter' && (
               <FilterMenu
                 airport={selectedAirport}
                 floor={selectedFloor}
                 onFilterChange={handleFilterChange}
               />
             )}
+            {sidebarView === 'flights' && (
+              <FlightInfo airport={selectedAirport} />
+            )}
           </div>
+          
+          {sidebarView !== 'flights' && (
+            <div className="wait-times-panel">
+              <WaitTimes airport={selectedAirport} />
+            </div>
+          )}
         </div>
         
         <div className="map-section">
@@ -158,7 +210,7 @@ function App() {
             </div>
           )}
           
-          {!error && selectedAirport && selectedFloor && (
+          {!error && selectedAirport && selectedFloor && sidebarView !== 'flights' && (
             <Map
               airport={selectedAirport}
               floor={selectedFloor}
@@ -171,6 +223,14 @@ function App() {
                 // through a ref or context in a full implementation
               }}
             />
+          )}
+          
+          {sidebarView === 'flights' && !error && (
+            <div className="flight-map-container">
+              <h3>Real-time Flight Tracking</h3>
+              <p>Flight tracking visualization would appear here in the full implementation.</p>
+              <p>For the MVP, we're focusing on in-airport navigation and flight information.</p>
+            </div>
           )}
           
           {loading && (
