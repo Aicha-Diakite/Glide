@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../styles/Onboarding.css';
+import travelerImage from '../assets/images/traveler.jpg';
 
 const Onboarding = ({ onComplete }) => {
   const [step, setStep] = useState(1);
@@ -21,117 +23,96 @@ const Onboarding = ({ onComplete }) => {
   return (
     <div className="onboarding-container">
       {step === 1 && (
-        <div className="onboarding-slide">
-          <div className="onboarding-header">
-            <h1 className="app-title">Glide <span className="plane-icon">✈</span></h1>
-            <p className="app-subtitle">Your personalized travel assistant.</p>
-          </div>
+        <div className="onboarding-content">
+          <h1 className="app-title">Glide <span className="plane-icon">✈</span></h1>
+          <p className="app-subtitle">Your personalized travel assistant.</p>
           
-          <div className="onboarding-image">
-            {/* Replace with actual image */}
+          <div className="image-container">
             <img 
-              src="/assets/images/onboarding-1.png" 
-              alt="Navigate the Airport" 
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = 'https://via.placeholder.com/300x240?text=Navigate+Airport';
-              }}
+              src={travelerImage} 
+              alt="Traveler with suitcase" 
+              className="traveler-image"
             />
           </div>
           
-          <div className="onboarding-content">
-            <h2>Navigate the Airport</h2>
-            <p>
+          <div className="content-bottom">
+            <h2 className="content-title">Navigate the Aiport</h2>
+            
+            <p className="content-text">
               Seamlessly navigate any airport with our intuitive smart navigation maps that 
               create personalized route plans for you.
             </p>
-          </div>
-          
-          <div className="onboarding-actions">
-            <button className="primary-button" onClick={nextStep}>Next</button>
             
-            <div className="step-indicators">
-              <div className="step-indicator active"></div>
-              <div className="step-indicator"></div>
-              <div className="step-indicator"></div>
+            <button className="next-button" onClick={nextStep}>Next</button>
+            
+            <div className="indicators">
+              <div className="indicator active"></div>
+              <div className="indicator"></div>
+              <div className="indicator"></div>
             </div>
           </div>
         </div>
       )}
       
       {step === 2 && (
-        <div className="onboarding-slide">
-          <div className="onboarding-header">
-            <h1 className="app-title">Glide <span className="plane-icon">✈</span></h1>
-            <p className="app-subtitle">Your personalized travel assistant.</p>
-          </div>
+        <div className="onboarding-content">
+          <h1 className="app-title">Glide <span className="plane-icon">✈</span></h1>
+          <p className="app-subtitle">Your personalized travel assistant.</p>
           
-          <div className="onboarding-image">
-            {/* Replace with actual image */}
+          <div className="image-container">
             <img 
-              src="/assets/images/onboarding-2.png" 
-              alt="Save Time and Plan Ahead" 
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = 'https://via.placeholder.com/300x240?text=Save+Time';
-              }}
+              src={travelerImage} 
+              alt="Traveler with suitcase" 
+              className="traveler-image"
             />
           </div>
           
-          <div className="onboarding-content">
-            <h2>Save Time and<br />Plan Ahead</h2>
-            <p>
+          <div className="content-bottom">
+            <h2 className="content-title">Save Time and<br />Plan Ahead</h2>
+            
+            <p className="content-text">
               Save time and plan ahead with our real-time security line updates, 
               restaurant wait times, and airport traffic.
             </p>
-          </div>
-          
-          <div className="onboarding-actions">
-            <button className="primary-button" onClick={nextStep}>Next</button>
             
-            <div className="step-indicators">
-              <div className="step-indicator"></div>
-              <div className="step-indicator active"></div>
-              <div className="step-indicator"></div>
+            <button className="next-button" onClick={nextStep}>Next</button>
+            
+            <div className="indicators">
+              <div className="indicator"></div>
+              <div className="indicator active"></div>
+              <div className="indicator"></div>
             </div>
           </div>
         </div>
       )}
       
       {step === 3 && (
-        <div className="onboarding-slide">
-          <div className="onboarding-header">
-            <h1 className="app-title">Glide <span className="plane-icon">✈</span></h1>
-            <p className="app-subtitle">Your personalized travel assistant.</p>
-          </div>
+        <div className="onboarding-content">
+          <h1 className="app-title">Glide <span className="plane-icon">✈</span></h1>
+          <p className="app-subtitle">Your personalized travel assistant.</p>
           
-          <div className="onboarding-image">
-            {/* Replace with actual image */}
+          <div className="image-container">
             <img 
-              src="/assets/images/onboarding-3.png" 
-              alt="Personalized travel experience" 
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = 'https://via.placeholder.com/300x240?text=Personalized+Experience';
-              }}
+              src={travelerImage} 
+              alt="Traveler with suitcase" 
+              className="traveler-image"
             />
           </div>
           
-          <div className="onboarding-content">
-            <h2>Personalized travel experience</h2>
-            <p>
+          <div className="content-bottom">
+            <h2 className="content-title">Personalized travel<br />experience</h2>
+            
+            <p className="content-text">
               Recommended lounges, restaurants, and more based on user preferences 
               and past history.
             </p>
-          </div>
-          
-          <div className="onboarding-actions">
-            <button className="primary-button" onClick={completeOnboarding}>Finish</button>
             
-            <div className="step-indicators">
-              <div className="step-indicator"></div>
-              <div className="step-indicator"></div>
-              <div className="step-indicator active"></div>
+            <button className="next-button" onClick={completeOnboarding}>Finish</button>
+            
+            <div className="indicators">
+              <div className="indicator"></div>
+              <div className="indicator"></div>
+              <div className="indicator active"></div>
             </div>
           </div>
         </div>

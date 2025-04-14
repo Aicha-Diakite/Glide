@@ -4,6 +4,7 @@ import Onboarding from './screens/Onboarding';
 import MainApp from './screens/MainApp';
 import Profile from './screens/Profile';
 import './styles.css';
+import './styles/Onboarding.css';
 
 function App() {
   const [isFirstVisit, setIsFirstVisit] = useState(true);
