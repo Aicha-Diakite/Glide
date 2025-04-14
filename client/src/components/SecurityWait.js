@@ -1,57 +1,73 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { fetchSecurityWaitTimes } from '../services/security';
 
-const WaitTimes = ({ airport }) => {
+const SecurityWait = ({ airport }) => {
   const [waitTimes, setWaitTimes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   
-  
   // Fetch wait times for the selected airport
- // In WaitTimes.js
-useEffect(() => {
+  useEffect(() => {
     if (!airport) return;
     
-    // Skip API call and use mockData
-    console.log("Using mock wait times data");
-    const mockTimes = [
-      {
-        id: "security-t1",
-        checkpoint: "Terminal 1 Security",
-        waitMinutes: Math.floor(Math.random() * 40) + 5,
-        status: "low",
-        lastUpdated: new Date().toISOString()
-      },
-      {
-        id: "security-t2",
-        checkpoint: "Terminal 2 Security",
-        waitMinutes: Math.floor(Math.random() * 40) + 5,
-        status: "medium",
-        lastUpdated: new Date().toISOString()
-      },
-      {
-        id: "security-t3",
-        checkpoint: "Terminal 3 Security",
-        waitMinutes: Math.floor(Math.random() * 40) + 5,
-        status: "high",
-        lastUpdated: new Date().toISOString()
+    const getWaitTimes = async () => {
+      try {
+        setLoading(true);
+        const data = await fetchSecurityWaitTimes(airport);
+        setWaitTimes(data);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching wait times:', err);
+        setError('Failed to load security wait times');
+        
+        // Mock data for MVP
+        const mockTimes = [
+          {
+            id: "security-t1",
+            checkpoint: "Terminal 1 Security",
+            waitMinutes: Math.floor(Math.random() * 40) + 5,
+            status: "low",
+            lastUpdated: new Date().toISOString()
+          },
+          {
+            id: "security-t2",
+            checkpoint: "Terminal 2 Security",
+            waitMinutes: Math.floor(Math.random() * 40) + 5,
+            status: "medium",
+            lastUpdated: new Date().toISOString()
+          },
+          {
+            id: "security-t3",
+            checkpoint: "Terminal 3 Security",
+            waitMinutes: Math.floor(Math.random() * 40) + 5,
+            status: "high",
+            lastUpdated: new Date().toISOString()
+          }
+        ];
+        
+        // Update status based on wait time
+        mockTimes.forEach(checkpoint => {
+          if (checkpoint.waitMinutes < 15) {
+            checkpoint.status = 'low';
+          } else if (checkpoint.waitMinutes < 30) {
+            checkpoint.status = 'medium';
+          } else {
+            checkpoint.status = 'high';
+          }
+        });
+        
+        setWaitTimes(mockTimes);
+      } finally {
+        setLoading(false);
       }
-    ];
+    };
     
-    // Update status based on wait time
-    mockTimes.forEach(checkpoint => {
-      if (checkpoint.waitMinutes < 15) {
-        checkpoint.status = 'low';
-      } else if (checkpoint.waitMinutes < 30) {
-        checkpoint.status = 'medium';
-      } else {
-        checkpoint.status = 'high';
-      }
-    });
+    getWaitTimes();
     
-    setWaitTimes(mockTimes);
-    setError(null);
-    setLoading(false);
+    // Set up periodic refresh (every 5 minutes)
+    const refreshInterval = setInterval(getWaitTimes, 5 * 60 * 1000);
+    
+    return () => clearInterval(refreshInterval);
   }, [airport]);
   
   // Format the time since last update
@@ -69,6 +85,21 @@ useEffect(() => {
     } else {
       const hours = Math.floor(diffMinutes / 60);
       return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+    }
+  };
+  
+  // Handle refresh button click
+  const handleRefresh = async () => {
+    try {
+      setLoading(true);
+      const data = await fetchSecurityWaitTimes(airport);
+      setWaitTimes(data);
+      setError(null);
+    } catch (err) {
+      console.error('Error refreshing wait times:', err);
+      setError('Failed to refresh wait times');
+    } finally {
+      setLoading(false);
     }
   };
   
@@ -123,21 +154,7 @@ useEffect(() => {
       <div className="wait-times-footer">
         <button 
           className="refresh-button"
-          onClick={() => {
-            setLoading(true);
-            axios.get(`/api/security/${airport}/wait-times`)
-              .then(response => {
-                setWaitTimes(response.data);
-                setError(null);
-              })
-              .catch(err => {
-                console.error('Error refreshing wait times:', err);
-                setError('Failed to refresh wait times');
-              })
-              .finally(() => {
-                setLoading(false);
-              });
-          }}
+          onClick={handleRefresh}
           disabled={loading}
         >
           {loading ? 'Refreshing...' : 'Refresh'}
@@ -147,4 +164,4 @@ useEffect(() => {
   );
 };
 
-export default WaitTimes;
+export default SecurityWait;

@@ -3,13 +3,24 @@ const express = require('express');
 const router = express.Router();
 
 // Import route modules
+
 const airportsRouter = require('./api/routes/airports');
+
+// Log for debugging
+console.log('Setting up airport routes');
+
 const securityRouter = require('./api/routes/security');
 const amenitiesRouter = require('./api/routes/amenities');
 const flightsRouter = require('./api/routes/flights');
 
 // Set up API routes
 router.use('/airports', airportsRouter);
+
+// Test route to verify the router is working
+router.get('/test', (req, res) => {
+    res.json({ message: 'API routes are working!' });
+  });
+  
 router.use('/security', securityRouter);
 router.use('/amenities', amenitiesRouter);
 router.use('/flights', flightsRouter);
