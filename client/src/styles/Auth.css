@@ -1,0 +1,257 @@
+/* Auth (Sign In, Sign Up, Forgot Password, OTP) styles */
+
+.auth-container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #2563eb; /* Match the blue from your design */
+    padding: 16px;
+  }
+  
+  .auth-card {
+    width: 100%;
+    max-width: 400px;
+    background-color: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .auth-header-image {
+    height: 180px;
+    background-color: #2563eb;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .auth-header-image::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url('../assets/images/traveler.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.7;
+  }
+  
+  .signup-image::before {
+    background-image: url('../assets/images/traveler.jpg');
+  }
+  
+  .forgot-image::before {
+    background-image: url('../assets/images/traveler.jpg');
+  }
+  
+  .otp-image::before {
+    background-image: url('../assets/images/traveler.jpg');
+  }
+
+  .auth-content {
+    padding: 24px;
+  }
+  
+  .auth-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    color: #111827;
+  }
+  
+  .auth-subtitle {
+    font-size: 14px;
+    color: #6B7280;
+    margin: 0 0 24px;
+  }
+  
+  .auth-error {
+    background-color: #FEE2E2;
+    color: #B91C1C;
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    font-size: 14px;
+  }
+  
+  .auth-success {
+    background-color: #DCFCE7;
+    color: #166534;
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    font-size: 14px;
+  }
+  
+  .form-group {
+    margin-bottom: 16px;
+  }
+  
+  .form-group label {
+    display: block;
+    font-size: 14px;
+    color: #374151;
+    margin-bottom: 8px;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #111827;
+    transition: border-color 0.2s;
+  }
+  
+  .form-group input:focus {
+    border-color: #2563eb;
+    outline: none;
+  }
+  
+  .form-group input::placeholder {
+    color: #9CA3AF;
+  }
+  
+  .form-link-container {
+    text-align: right;
+    margin-bottom: 20px;
+  }
+  
+  .form-link {
+    font-size: 14px;
+    color: #2563eb;
+    text-decoration: none;
+  }
+  
+  .form-link:hover {
+    text-decoration: underline;
+  }
+  
+  .auth-button {
+    width: 100%;
+    padding: 14px;
+    background-color: #18181B;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-bottom: 24px;
+  }
+  
+  .auth-button:hover {
+    background-color: #27272A;
+  }
+  
+  .separator {
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
+    color: #9CA3AF;
+  }
+  
+  .separator::before,
+  .separator::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #E5E7EB;
+  }
+  
+  .separator-text {
+    padding: 0 10px;
+    font-size: 14px;
+  }
+  
+  .social-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  
+  .social-button {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    border: 1px solid #E5E7EB;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .social-button:hover {
+    background-color: #F9FAFB;
+  }
+  
+  .social-icon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .auth-redirect {
+    text-align: center;
+    font-size: 14px;
+    color: #6B7280;
+  }
+  
+  .auth-redirect-link {
+    color: #2563eb;
+    margin-left: 8px;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .auth-redirect-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* OTP Input styles */
+  #otp-code {
+    letter-spacing: 8px;
+    font-size: 20px;
+    text-align: center;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 480px) {
+    .auth-card {
+      border-radius: 12px;
+    }
+    
+    .auth-header-image {
+      height: 150px;
+    }
+    
+    .auth-content {
+      padding: 20px;
+    }
+    
+    .auth-title {
+      font-size: 22px;
+    }
+  }
+  
+  /* For very small screens */
+  @media (max-width: 320px) {
+    .auth-content {
+      padding: 16px;
+    }
+    
+    .form-group input {
+      padding: 10px 12px;
+    }
+    
+    .auth-button {
+      padding: 12px;
+    }
+  }
