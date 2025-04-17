@@ -8,59 +8,55 @@ const OTPVerification = () => {
   const navigate = useNavigate();
   const inputRef = useRef(null);
 
-  // Focus on the input field when component mounts
   useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
+    if (inputRef.current) inputRef.current.focus();
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Basic validation
-    if (!otp || otp.length < 4) {
-      setError('Please enter a valid OTP code');
+    if (otp.length !== 6) {
+      setError('Enter 6‑digit code');
       return;
     }
-    
-    // For demo purposes, just navigate to the app
-    // In a real app, you would verify the OTP with your backend
-    localStorage.setItem('isAuthenticated', 'true');
-    navigate('/app');
+
+    try {
+      const res = await fetch('/api/auth/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ otp })
+      });
+      if (!res.ok) throw new Error('Invalid code');
+      localStorage.setItem('isAuthenticated', 'true');
+      navigate('/app');
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <div className="auth-header-image otp-image"></div>
-        
+        <div className="auth-header-image otp-image" />
         <div className="auth-content">
-          <h2 className="auth-title">OTP Verification</h2>
-          <p className="auth-subtitle">Please enter a code from email</p>
-          
+          <h2 className="auth-title">Enter code</h2>
           {error && <p className="auth-error">{error}</p>}
-          
           <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="otp-code">Your code</label>
+            <div className="form-group otp-group">
               <input
-                type="text"
                 id="otp-code"
                 ref={inputRef}
-                placeholder="••••"
+                placeholder="••••••"
                 value={otp}
                 onChange={(e) => {
-                  const value = e.target.value.replace(/[^0-9]/g, '');
-                  if (value.length <= 6) {
-                    setOtp(value);
-                  }
+                  const v = e.target.value.replace(/[^0-9]/g, '');
+                  if (v.length <= 6) setOtp(v);
                 }}
                 maxLength={6}
               />
             </div>
-            
-            <button type="submit" className="auth-button">Verification</button>
+            <button type="submit" className="auth-button">
+              Verify
+            </button>
           </form>
         </div>
       </div>

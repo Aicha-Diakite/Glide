@@ -1,51 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../contexts/AuthContext';
 import '../styles/Auth.css';
+
+const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
-  const handleSignIn = (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
-    
-    // Basic validation
     if (!email || !password) {
-      setError('Please enter both email and password');
+      setError('Enter email & password');
       return;
     }
-    
-    // For demo purposes, just navigate to app
-    // In a real app, you would authenticate with a backend
-    localStorage.setItem('isAuthenticated', 'true');
-    navigate('/app');
-  };
 
-  const handleGoogleSignIn = () => {
-    // Google authentication would be implemented here
-    localStorage.setItem('isAuthenticated', 'true');
-    navigate('/app');
-  };
+    try {
+      const res = await fetch(`${API_BASE}/api/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
 
-  const handleTwitterSignIn = () => {
-    // Twitter authentication would be implemented here
-    localStorage.setItem('isAuthenticated', 'true');
-    navigate('/app');
+      const ct = res.headers.get('content-type');
+      const data =
+        ct && ct.includes('application/json')
+          ? await res.json()
+          : { message: await res.text() };
+
+      if (!res.ok) throw new Error(data.message);
+      login(data.user, data.token);
+      navigate('/app');
+    } catch (err) {
+      setError(err.message || 'Unable to sign in');
+    }
   };
 
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <div className="auth-header-image"></div>
-        
+        <div className="auth-header-image" />
         <div className="auth-content">
           <h2 className="auth-title">Sign In</h2>
           <p className="auth-subtitle">Please enter a valid account</p>
-          
           {error && <p className="auth-error">{error}</p>}
-          
           <form onSubmit={handleSignIn}>
             <div className="form-group">
               <label htmlFor="email">Email</label>
@@ -57,51 +59,24 @@ const SignIn = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            
+
             <div className="form-group">
               <label htmlFor="password">Password</label>
               <input
                 type="password"
                 id="password"
-                placeholder="••••••••"
+                placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            
-            <div className="form-link-container">
-              <Link to="/forgot-password" className="form-link">Forgot Password</Link>
-            </div>
-            
+
             <button type="submit" className="auth-button">Sign In</button>
-            
-            <div className="separator">
-              <span className="separator-text">OR</span>
-            </div>
-            
-            <div className="social-buttons">
-              <button 
-                type="button" 
-                className="social-button google"
-                onClick={handleGoogleSignIn}
-              >
-                <img src="/assets/icons/google.svg" alt="Google" className="social-icon" />
-              </button>
-              
-              <button 
-                type="button" 
-                className="social-button twitter"
-                onClick={handleTwitterSignIn}
-              >
-                <img src="/assets/icons/twitter.svg" alt="Twitter" className="social-icon" />
-              </button>
-            </div>
-            
-            <div className="auth-redirect">
-              <span>Don't have account?</span>
-              <Link to="/signup" className="auth-redirect-link">Sign Up</Link>
-            </div>
           </form>
+
+          <p className="auth-link">
+            Don't have an account? <Link to="/signup">Sign Up</Link>
+          </p>
         </div>
       </div>
     </div>
