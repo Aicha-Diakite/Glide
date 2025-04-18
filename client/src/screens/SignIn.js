@@ -19,8 +19,21 @@ const SignIn = () => {
       return;
     }
     
-    // For demo purposes, just navigate to app
-    // In a real app, you would authenticate with a backend
+    // Check if this account already exists
+    // In a real app, this would be an API call to your backend
+    // For demo purposes, we'll check localStorage
+    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+    const userExists = registeredUsers.some(user => user.email === email);
+    
+    if (!userExists) {
+      setError('No account found with this email. Please sign up first.');
+      return;
+    }
+    
+    // For demo purposes, we'll skip password validation
+    // In a real app, you would verify the password here
+    
+    // Store user info in localStorage
     localStorage.setItem('userName', email.split('@')[0]); // Use email username as name
     localStorage.setItem('userEmail', email);
     localStorage.setItem('isAuthenticated', 'true');
@@ -39,6 +52,16 @@ const SignIn = () => {
 
   const handleGoogleSignIn = () => {
     // Google authentication would be implemented here
+    
+    // Simulate user registration for demo
+    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+    const googleUser = { name: 'Google User', email: 'google@example.com' };
+    
+    // Add user if they don't exist
+    if (!registeredUsers.some(user => user.email === googleUser.email)) {
+      localStorage.setItem('registeredUsers', JSON.stringify([...registeredUsers, googleUser]));
+    }
+    
     localStorage.setItem('userName', 'Google User');
     localStorage.setItem('userEmail', 'google@example.com');
     localStorage.setItem('isAuthenticated', 'true');
@@ -55,6 +78,16 @@ const SignIn = () => {
 
   const handleTwitterSignIn = () => {
     // Twitter authentication would be implemented here
+    
+    // Simulate user registration for demo
+    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+    const twitterUser = { name: 'Twitter User', email: 'twitter@example.com' };
+    
+    // Add user if they don't exist
+    if (!registeredUsers.some(user => user.email === twitterUser.email)) {
+      localStorage.setItem('registeredUsers', JSON.stringify([...registeredUsers, twitterUser]));
+    }
+    
     localStorage.setItem('userName', 'Twitter User');
     localStorage.setItem('userEmail', 'twitter@example.com');
     localStorage.setItem('isAuthenticated', 'true');

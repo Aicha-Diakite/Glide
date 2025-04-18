@@ -25,6 +25,17 @@ const SignUp = () => {
       return;
     }
 
+    // Check if this email is already registered
+    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+    if (registeredUsers.some(user => user.email === email)) {
+      setError('An account with this email already exists');
+      return;
+    }
+
+    // Add new user to registered users
+    const newUser = { name, email, password };
+    localStorage.setItem('registeredUsers', JSON.stringify([...registeredUsers, newUser]));
+
     // Store user info in localStorage
     localStorage.setItem('userName', name);
     localStorage.setItem('userEmail', email);
@@ -44,13 +55,23 @@ const SignUp = () => {
 
   const handleGoogleSignUp = () => {
     // Google authentication would be implemented here
+    
+    // Simulate user registration for demo
+    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+    const googleUser = { name: 'Google User', email: 'google@example.com' };
+    
+    // Add user if they don't exist
+    if (!registeredUsers.some(user => user.email === googleUser.email)) {
+      localStorage.setItem('registeredUsers', JSON.stringify([...registeredUsers, googleUser]));
+    }
+    
     localStorage.setItem('userName', 'Google User');
     localStorage.setItem('userEmail', 'google@example.com');
     localStorage.setItem('isAuthenticated', 'true');
     
     setNotification({
       type: 'success',
-      message: 'Google account connected successfully!'
+      message: 'Signed up with Google successfully!'
     });
     
     setTimeout(() => {
@@ -60,13 +81,23 @@ const SignUp = () => {
 
   const handleTwitterSignUp = () => {
     // Twitter authentication would be implemented here
+    
+    // Simulate user registration for demo
+    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+    const twitterUser = { name: 'Twitter User', email: 'twitter@example.com' };
+    
+    // Add user if they don't exist
+    if (!registeredUsers.some(user => user.email === twitterUser.email)) {
+      localStorage.setItem('registeredUsers', JSON.stringify([...registeredUsers, twitterUser]));
+    }
+    
     localStorage.setItem('userName', 'Twitter User');
     localStorage.setItem('userEmail', 'twitter@example.com');
     localStorage.setItem('isAuthenticated', 'true');
     
     setNotification({
       type: 'success',
-      message: 'Twitter account connected successfully!'
+      message: 'Signed up with Twitter successfully!'
     });
     
     setTimeout(() => {

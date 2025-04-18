@@ -16,6 +16,7 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // Check if user has seen onboarding screens and is authenticated
+
   useEffect(() => {
     const onboardingCompleted = localStorage.getItem('onboardingCompleted');
     const authStatus = localStorage.getItem('isAuthenticated');
@@ -26,6 +27,11 @@ function App() {
     
     if (authStatus === 'true') {
       setIsAuthenticated(true);
+    }
+    
+    // Initialize registeredUsers array if it doesn't exist yet
+    if (!localStorage.getItem('registeredUsers')) {
+      localStorage.setItem('registeredUsers', JSON.stringify([]));
     }
   }, []);
 
