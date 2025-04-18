@@ -17,7 +17,7 @@ const Onboarding = ({ onComplete }) => {
 
   const completeOnboarding = () => {
     onComplete();
-    navigate('/app');
+    navigate('/signin');
   };
 
   return (
@@ -107,7 +107,8 @@ const Onboarding = ({ onComplete }) => {
               and past history.
             </p>
             
-            <button className="next-button" onClick={completeOnboarding}>Finish</button>
+            <button className="next-button" onClick={completeOnboarding}>Sign in or create an account</button>
+            {/* <button className="next-button" onClick={completeOnboarding}>Finish</button> */}
             
             <div className="indicators">
               <div className="indicator"></div>

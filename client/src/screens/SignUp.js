@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Notification from '../components/Notification';
 import '../styles/Auth.css';
 
 const SignUp = () => {
@@ -7,6 +8,7 @@ const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [notification, setNotification] = useState(null);
   const navigate = useNavigate();
 
   const handleSignUp = (e) => {
@@ -18,26 +20,71 @@ const SignUp = () => {
       return;
     }
     
-    // For demo purposes, just navigate to app
-    // In a real app, you would register with a backend
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters');
+      return;
+    }
+
+    // Store user info in localStorage
+    localStorage.setItem('userName', name);
+    localStorage.setItem('userEmail', email);
     localStorage.setItem('isAuthenticated', 'true');
-    navigate('/app');
+    
+    // Show success notification
+    setNotification({
+      type: 'success',
+      message: 'Account created successfully! Redirecting to app...'
+    });
+    
+    // Redirect to app after delay
+    setTimeout(() => {
+      navigate('/app');
+    }, 2000);
   };
 
   const handleGoogleSignUp = () => {
     // Google authentication would be implemented here
+    localStorage.setItem('userName', 'Google User');
+    localStorage.setItem('userEmail', 'google@example.com');
     localStorage.setItem('isAuthenticated', 'true');
-    navigate('/app');
+    
+    setNotification({
+      type: 'success',
+      message: 'Google account connected successfully!'
+    });
+    
+    setTimeout(() => {
+      navigate('/app');
+    }, 2000);
   };
 
   const handleTwitterSignUp = () => {
     // Twitter authentication would be implemented here
+    localStorage.setItem('userName', 'Twitter User');
+    localStorage.setItem('userEmail', 'twitter@example.com');
     localStorage.setItem('isAuthenticated', 'true');
-    navigate('/app');
+    
+    setNotification({
+      type: 'success',
+      message: 'Twitter account connected successfully!'
+    });
+    
+    setTimeout(() => {
+      navigate('/app');
+    }, 2000);
   };
 
   return (
     <div className="auth-container">
+      {notification && (
+        <Notification
+          type={notification.type}
+          message={notification.message}
+          duration={3000}
+          onClose={() => setNotification(null)}
+        />
+      )}
+      
       <div className="auth-card">
         <div className="auth-header-image signup-image"></div>
         
@@ -93,7 +140,7 @@ const SignUp = () => {
                 className="social-button google"
                 onClick={handleGoogleSignUp}
               >
-                <img src="/assets/icons/google.svg" alt="Google" className="social-icon" />
+                G
               </button>
               
               <button 
@@ -101,7 +148,7 @@ const SignUp = () => {
                 className="social-button twitter"
                 onClick={handleTwitterSignUp}
               >
-                <img src="/assets/icons/twitter.svg" alt="Twitter" className="social-icon" />
+                X
               </button>
             </div>
             

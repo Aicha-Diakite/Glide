@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
-import Header from '../components/Header';
+import { useNavigate } from 'react-router-dom';
 import Map from '../components/Map';
 import Navigation from '../components/Navigation';
 import FilterMenu from '../components/FilterMenu';
 import SecurityWait from '../components/SecurityWait';
 import FlightInfo from '../components/FlightInfo';
+import ProfileIcon from '../components/ProfileIcon';
 import { fetchAirports, fetchAirportData } from '../services/airports';
+
 
 const MainApp = () => {
   const navigate = useNavigate();
@@ -77,7 +78,7 @@ const MainApp = () => {
           { id: "2", name: "Level 2 - Departures" },
           { id: "3", name: "Level 3 - Food Court" }
         ]);
-        setSelectedFloor("2");
+        setSelectedFloor("1");
       } finally {
         setLoading(false);
       }
@@ -86,13 +87,13 @@ const MainApp = () => {
     getAirportData();
   }, [selectedAirport]);
 
-  const handleAirportChange = (code) => {
-    setSelectedAirport(code);
+  const handleAirportChange = (e) => {
+    setSelectedAirport(e.target.value);
     setRoute(null); // Clear any existing route
   };
 
-  const handleFloorChange = (floorId) => {
-    setSelectedFloor(floorId);
+  const handleFloorChange = (e) => {
+    setSelectedFloor(e.target.value);
     setRoute(null); // Clear any existing route
   };
 
@@ -100,21 +101,52 @@ const MainApp = () => {
     setRoute(routeData);
   };
 
-  const handleProfileClick = () => {
-    navigate('/profile');
-  };
-
   return (
     <div className="app-container">
-      <Header 
-        airports={airports}
-        selectedAirport={selectedAirport}
-        floors={floors}
-        selectedFloor={selectedFloor}
-        onAirportChange={handleAirportChange}
-        onFloorChange={handleFloorChange}
-        onProfileClick={handleProfileClick}
-      />
+      <header className="app-header">
+        <div className="header-left">
+          <h1 className="app-title">Glide</h1>
+          <p className="app-tagline">Airport Navigation Made Simple</p>
+        </div>
+        
+        <div className="header-center">
+          <div className="selector-group">
+            <label htmlFor="airport-select">Airport:</label>
+            <select
+              id="airport-select"
+              value={selectedAirport}
+              onChange={handleAirportChange}
+              disabled={loading || airports.length === 0}
+            >
+              {airports.map(airport => (
+                <option key={airport.code} value={airport.code}>
+                  {airport.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          
+          <div className="selector-group">
+            <label htmlFor="floor-select">Floor:</label>
+            <select
+              id="floor-select"
+              value={selectedFloor}
+              onChange={handleFloorChange}
+              disabled={loading || floors.length === 0}
+            >
+              {floors.map(floor => (
+                <option key={floor.id} value={floor.id}>
+                  {floor.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+        
+        <div className="header-right">
+          <ProfileIcon />
+        </div>
+      </header>
       
       <div className="main-content">
         <div className="sidebar">

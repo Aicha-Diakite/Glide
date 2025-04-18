@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Notification from '../components/Notification';
 import '../styles/Auth.css';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [notification, setNotification] = useState(null);
   const navigate = useNavigate();
 
   const handleSignIn = (e) => {
@@ -19,24 +21,65 @@ const SignIn = () => {
     
     // For demo purposes, just navigate to app
     // In a real app, you would authenticate with a backend
+    localStorage.setItem('userName', email.split('@')[0]); // Use email username as name
+    localStorage.setItem('userEmail', email);
     localStorage.setItem('isAuthenticated', 'true');
-    navigate('/app');
+    
+    // Show success notification
+    setNotification({
+      type: 'success',
+      message: 'Signed in successfully! Redirecting to app...'
+    });
+    
+    // Redirect to app after delay
+    setTimeout(() => {
+      navigate('/app');
+    }, 2000);
   };
 
   const handleGoogleSignIn = () => {
     // Google authentication would be implemented here
+    localStorage.setItem('userName', 'Google User');
+    localStorage.setItem('userEmail', 'google@example.com');
     localStorage.setItem('isAuthenticated', 'true');
-    navigate('/app');
+    
+    setNotification({
+      type: 'success',
+      message: 'Signed in with Google successfully!'
+    });
+    
+    setTimeout(() => {
+      navigate('/app');
+    }, 2000);
   };
 
   const handleTwitterSignIn = () => {
     // Twitter authentication would be implemented here
+    localStorage.setItem('userName', 'Twitter User');
+    localStorage.setItem('userEmail', 'twitter@example.com');
     localStorage.setItem('isAuthenticated', 'true');
-    navigate('/app');
+    
+    setNotification({
+      type: 'success',
+      message: 'Signed in with Twitter successfully!'
+    });
+    
+    setTimeout(() => {
+      navigate('/app');
+    }, 2000);
   };
 
   return (
     <div className="auth-container">
+      {notification && (
+        <Notification
+          type={notification.type}
+          message={notification.message}
+          duration={3000}
+          onClose={() => setNotification(null)}
+        />
+      )}
+      
       <div className="auth-card">
         <div className="auth-header-image"></div>
         
@@ -85,7 +128,7 @@ const SignIn = () => {
                 className="social-button google"
                 onClick={handleGoogleSignIn}
               >
-                <img src="/assets/icons/google.svg" alt="Google" className="social-icon" />
+                G
               </button>
               
               <button 
@@ -93,7 +136,7 @@ const SignIn = () => {
                 className="social-button twitter"
                 onClick={handleTwitterSignIn}
               >
-                <img src="/assets/icons/twitter.svg" alt="Twitter" className="social-icon" />
+                X
               </button>
             </div>
             

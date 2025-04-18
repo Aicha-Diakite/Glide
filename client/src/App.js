@@ -6,7 +6,7 @@ import SignUp from './screens/SignUp';
 import ForgotPassword from './screens/ForgotPassword';
 import OTPVerification from './screens/OTPVerification';
 import MainApp from './screens/MainApp';
-import Profile from './screens/Profile';
+import Profile from './components/ProfileIcon';
 import './styles.css';
 import './styles/Onboarding.css';
 import './styles/Auth.css';
@@ -33,6 +33,8 @@ function App() {
   const completeOnboarding = () => {
     localStorage.setItem('onboardingCompleted', 'true');
     setIsFirstVisit(false);
+    // We don't automatically set authentication status here anymore
+    // User will need to sign in
   };
   
   // Protected route component
@@ -94,3 +96,4 @@ function App() {
 }
 
 export default App;
+

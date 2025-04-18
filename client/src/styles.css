@@ -386,7 +386,7 @@ html {
   }
 }
 
-
+/* Header content styles */
 .header-content {
   display: flex;
   justify-content: space-between;
@@ -928,4 +928,5 @@ html {
   align-items: center;
   justify-content: center;
   background-color: rgba(255, 255, 255, 0.8);
-  z-index: 10;}
+  z-index: 10;
+}

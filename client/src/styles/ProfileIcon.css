@@ -1,0 +1,74 @@
+/* Profile Icon Styles */
+
+.profile-icon-container {
+    position: relative;
+  }
+  
+  .profile-icon-button {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .profile-icon-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+  
+  .profile-dropdown {
+    position: absolute;
+    top: 45px;
+    right: 0;
+    background-color: white;
+    border-radius: 8px;
+    width: 220px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    overflow: hidden;
+  }
+  
+  .profile-header {
+    padding: 16px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .profile-name {
+    margin: 0 0 4px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+  }
+  
+  .profile-email {
+    margin: 0;
+    font-size: 14px;
+    color: #6b7280;
+    word-break: break-all;
+  }
+  
+  .profile-dropdown-items {
+    padding: 8px 0;
+  }
+  
+  .profile-dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 10px 16px;
+    text-align: left;
+    background: none;
+    border: none;
+    font-size: 14px;
+    color: #374151;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .profile-dropdown-item:hover {
+    background-color: #f3f4f6;
+  }
