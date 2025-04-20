@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Map from '../components/Map';
 import Navigation from '../components/Navigation';
 import FilterMenu from '../components/FilterMenu';
 import SecurityWait from '../components/SecurityWait';
@@ -213,10 +212,15 @@ const MainApp = () => {
           )}
           
           {!loading && !error && selectedAirport && selectedFloor && activeView !== 'flights' && (
-            <Map 
-              airport={selectedAirport}
-              floor={selectedFloor}
-              route={route}
+            <iframe
+              src="https://app.mappedin.com/map/6686b845c9f6d6000bc30300?embedded=true"
+              title="Mappedin Airport Demo Map"
+              allow="clipboard-write; web-share"
+              style={{
+                width: '100%',
+                height: '100%',
+                border: 'none'
+              }}
             />
           )}
           
