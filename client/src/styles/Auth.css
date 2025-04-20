@@ -6,7 +6,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #2563eb; /* Match the blue from your design */
+    background-color:  #0096FF; /* Match the blue from your design */
     padding: 16px;
   }
   
@@ -14,21 +14,22 @@
     width: 100%;
     max-width: 400px;
     background-color: white;
-    border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
-  .auth-header-image {
-    height: 180px;
-    background-color: #2563eb;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-  }
+ /* Background image section with blue background and rounded corners at top */
+.auth-header-image {
+  height: 180px;
+  background-color: #2563eb;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
   
+
   .auth-header-image::before {
     content: "";
     position: absolute;
@@ -52,9 +53,17 @@
     background-image: url('../assets/images/traveler.jpg');
   }
 
-  .auth-content {
-    padding: 24px;
-  }
+  /* White content section - add rounded corners to this */
+.auth-content {
+  background-color: white;
+  padding: 24px;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+  margin-top: -24px; /* Pull up to create overlapping effect */
+  position: relative; /* Ensure it stays on top */
+  z-index: 1;
+}
+
   
   .auth-title {
     font-size: 24px;
