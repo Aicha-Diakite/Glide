@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchSecurityWaitTimes } from '../services/security';
-import AirplaneLogo from '../components/AirplaneLogo';
+import ProfileIcon from '../components/ProfileIcon';
 
 const SecurityWait = ({ standalone = false }) => {
   const navigate = useNavigate();
@@ -115,26 +115,26 @@ const SecurityWait = ({ standalone = false }) => {
   if (standalone) {
     return (
       <div className="app-container">
-        <header className="app-header" style={{ backgroundColor: '#0096FF' }}>
-          <div className="header-left" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <AirplaneLogo width={32} height={32} color="white" />
-            <h1 className="app-title">Glide</h1>
-            <p className="app-tagline" style={{ marginLeft: '10px' }}>Airport Navigation Made Simple</p>
-          </div>
-          
-          <div className="header-right">
-            <button 
-              className="profile-button"
-              onClick={() => {}}
-              aria-label="User Profile"
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
-            </button>
-          </div>
-        </header>
+        <header style={{
+  backgroundColor: '#0096FF',
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  padding: '1rem 2rem',
+  color: 'white',
+  position: 'sticky',
+  top: 0,
+  zIndex: 1000,
+}}>
+  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+    <h1 style={{ margin: 0, fontSize: '1.5rem' }}>
+      Glide <span style={{ color: '#2563eb' }}>✈</span>
+    </h1>
+    
+  </div>
+  <ProfileIcon />
+</header>
+
         
         <div className="security-page">
           <div className="back-button-container" style={{ padding: '12px', borderBottom: '1px solid #e5e7eb' }}>
