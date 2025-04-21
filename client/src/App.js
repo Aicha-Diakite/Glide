@@ -6,6 +6,7 @@ import SignUp from './screens/SignUp';
 import ForgotPassword from './screens/ForgotPassword';
 import OTPVerification from './screens/OTPVerification';
 import MainApp from './screens/MainApp';
+import SecurityWait from './components/SecurityWait';
 import Profile from './components/ProfileIcon';
 import './styles.css';
 import './styles/Onboarding.css';
@@ -16,7 +17,6 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // Check if user has seen onboarding screens and is authenticated
-
   useEffect(() => {
     const onboardingCompleted = localStorage.getItem('onboardingCompleted');
     const authStatus = localStorage.getItem('isAuthenticated');
@@ -89,6 +89,15 @@ function App() {
         />
         
         <Route 
+          path="/security-wait-times" 
+          element={
+            <ProtectedRoute>
+              <SecurityWait standalone={true} />
+            </ProtectedRoute>
+          } 
+        />
+        
+        <Route 
           path="/profile" 
           element={
             <ProtectedRoute>
@@ -102,4 +111,3 @@ function App() {
 }
 
 export default App;
-
