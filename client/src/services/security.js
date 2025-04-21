@@ -39,7 +39,7 @@ const generateMockWaitTimes = (airportCode) => {
   } else if (hour >= 10 && hour <= 14) {
     baseWaitTime = 15; // Midday
   } else {
-    baseWaitTime = 10; // Evening or early morning
+    baseWaitTime = 20; // Evening or early morning
   }
   
   // Adjust for day of week - busier on Monday and Friday
