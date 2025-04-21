@@ -63,13 +63,13 @@ const MainApp = () => {
       {/* Main content that overflows */}
       <main style={{ flexGrow: 1 }}>
         {/* Huge map section */}
-        <div style={{ width: '95%', height: '85vh' }}>
+        <div style={{ width: '100%', height: '85vh' }}>
           <iframe
             src="https://app.mappedin.com/map/6686b845c9f6d6000bc30300?embedded=true"
             title="Mappedin Airport Demo Map"
             allow="clipboard-write; web-share"
             style={{
-              width: '95%',
+              width: '100%',
               height: '100%',
               border: 'none'
             }}
