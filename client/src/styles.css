@@ -35,6 +35,12 @@ html {
   overflow: hidden;
 }
 
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+}
+
 /* Header styles */
 .app-header {
   background-color: #2563eb;
@@ -238,6 +244,13 @@ html {
   background-color: white;
   border-radius: 0.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .user-info {
+    flex-direction: column; /* Stack elements vertically on small screens */
+    text-align: center;
+  }
 }
 
 .user-avatar {
@@ -450,10 +463,18 @@ html {
 }
 
 /* Main content area */
-.main-content {
+
+main-content {
   display: flex;
   flex: 1;
   overflow: hidden;
+  flex-direction: column; /* Ensure it's column on smaller screens */
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column; /* Stack elements vertically on small screens */
+  }
 }
 
 /* Sidebar styles */
@@ -906,10 +927,17 @@ html {
   cursor: not-allowed;
 }
 
-/* Map container */
 .map-container {
   flex: 1;
   position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  .map-container {
+    height: 60vh; /* Reduce height for smaller screens */
+  }
 }
 
 .map-wrapper {
